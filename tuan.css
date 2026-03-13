@@ -112,6 +112,21 @@ html {
         align-items: center;
         justify-content: center;
     }
+    .anmo{
+        display: none !important;
+    }
+    .brand-partners{
+        margin-top: 200px !important;
+    }
+    .case-study-title{
+        font-size: 1.1rem !important;
+    }
+    .rate-card-header{
+gap: 0px !important;
+    }
+    .case-study-section{
+        margin-top: 0px !important;
+    }
     .side-nav-list {
         max-height: 0;
         overflow: hidden;
@@ -590,6 +605,13 @@ body {
 /* Photo collage (old - hide) */
 .photo-collage {
     display: none;
+}
+
+@media (max-width: 768px) {
+    .brand-marquee-wrapper {
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    }
 }
 
 /* Section Divider */
@@ -1964,7 +1986,8 @@ body {
         bottom: auto;
     }
     
-    .editorial-photo-1 { margin-bottom: 15px; height: 250px; }
+    .editorial-photo-1 { margin-bottom: 15px; height: auto; overflow: visible; }
+    .editorial-photo-1 img { width: 100%; height: auto !important; object-fit: unset !important; border-radius: 24px; }
     .editorial-photo-2 { margin-bottom: 15px; height: 250px; }
     .editorial-photo-3 { height: 300px; }
     
@@ -2185,7 +2208,7 @@ body {
     }
 
     .event-card-price {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .event-card {
