@@ -25,6 +25,11 @@
 </head>
 
 <body>
+    <!-- Page Load Overlay -->
+    <div id="page-loader">
+        <h1 class="loader-title">KIỀU LAN BEAUTY</h1>
+    </div>
+
     <!-- Side Navigation -->
     <nav class="side-nav" id="sideNav">
         <button class="side-nav-toggle" id="sideNavToggle"><i class="bi bi-list"></i></button>
@@ -864,6 +869,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         // Init Swiper for rate card sliders
@@ -1046,6 +1053,189 @@
             navLinks.forEach(link => {
                 link.addEventListener('click', () => nav.classList.remove('open'));
             });
+        })();
+
+        // ===== GSAP Section Header Scroll Animations =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.querySelectorAll('.section-header').forEach(header => {
+            const h2 = header.querySelector('h2');
+            const sub = header.querySelector('.sub');
+
+            if (h2) {
+                gsap.fromTo(h2,
+                    { y: 60, opacity: 0, scale: 0.8, letterSpacing: '0px' },
+                    {
+                        y: 0, opacity: 1, scale: 1, letterSpacing: '1px',
+                        duration: 1, ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: header,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            }
+
+            if (sub) {
+                gsap.fromTo(sub,
+                    { y: 30, opacity: 0 },
+                    {
+                        y: 0, opacity: 1,
+                        duration: 0.8, ease: 'power2.out', delay: 0.3,
+                        scrollTrigger: {
+                            trigger: header,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            }
+        });
+
+        // ===== GSAP Scroll Reveal for all content elements =====
+
+        // Hero content elements - stagger reveal
+        gsap.fromTo('.brand-title', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: 0.3, ease: 'power2.out',
+            scrollTrigger: { trigger: '.hero-content', start: 'top 80%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.brand-bio', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'power2.out',
+            scrollTrigger: { trigger: '.brand-bio', start: 'top 90%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.content-focus', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: '.content-focus', start: 'top 90%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.focus-list li', { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out',
+            scrollTrigger: { trigger: '.focus-list', start: 'top 90%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.editorial-photo', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'power2.out',
+            scrollTrigger: { trigger: '.editorial-photo', start: 'top 85%', toggleActions: 'play none none none' } });
+
+        // Section dividers
+        gsap.utils.toArray('.section-divider').forEach(div => {
+            gsap.fromTo(div, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)',
+                scrollTrigger: { trigger: div, start: 'top 90%', toggleActions: 'play none none none' } });
+        });
+
+        // Brand marquee
+        gsap.utils.toArray('.brand-marquee-wrapper').forEach((el, i) => {
+            gsap.fromTo(el, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: i * 0.2, ease: 'power2.out',
+                scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' } });
+        });
+
+        // Audience cards
+        gsap.fromTo('.audience-card', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: '.audience-card', start: 'top 85%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.audience-photo', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, stagger: 0.15, ease: 'back.out(1.4)',
+            scrollTrigger: { trigger: '.audience-photos-col', start: 'top 85%', toggleActions: 'play none none none' } });
+
+        // Case study cards
+        gsap.utils.toArray('.case-study-card').forEach((card, i) => {
+            gsap.fromTo(card, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, delay: i * 0.2, ease: 'power2.out',
+                scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' } });
+        });
+
+        // Rate cards - slide in alternating
+        gsap.utils.toArray('.rate-card').forEach((card, i) => {
+            const fromX = i % 2 === 0 ? -60 : 60;
+            gsap.fromTo(card, { x: fromX, opacity: 0 }, { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' } });
+        });
+
+        // Rate card includes list items
+        gsap.utils.toArray('.includes-list').forEach(list => {
+            gsap.fromTo(list.querySelectorAll('li'), { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out',
+                scrollTrigger: { trigger: list, start: 'top 90%', toggleActions: 'play none none none' } });
+        });
+
+        // Event cards
+        gsap.utils.toArray('.event-card').forEach((card, i) => {
+            gsap.fromTo(card, { y: 50, opacity: 0, rotateX: 10 }, { y: 0, opacity: 1, rotateX: 0, duration: 0.8, delay: i * 0.2, ease: 'power2.out',
+                scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' } });
+        });
+
+        // SDHA cards
+        gsap.utils.toArray('.sdha-card').forEach((card, i) => {
+            gsap.fromTo(card, { y: 40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, delay: i * 0.15, ease: 'back.out(1.4)',
+                scrollTrigger: { trigger: '.sdha-grid', start: 'top 85%', toggleActions: 'play none none none' } });
+        });
+
+        // Livestream cards
+        gsap.utils.toArray('.livestream-card').forEach((card, i) => {
+            gsap.fromTo(card, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, delay: i * 0.15, ease: 'power2.out',
+                scrollTrigger: { trigger: '.livestream-grid', start: 'top 85%', toggleActions: 'play none none none' } });
+        });
+
+        // Partnership cards
+        gsap.utils.toArray('.partnership-card').forEach((card, i) => {
+            gsap.fromTo(card, { y: 50, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, delay: i * 0.15, ease: 'back.out(1.3)',
+                scrollTrigger: { trigger: '.partnership-grid', start: 'top 85%', toggleActions: 'play none none none' } });
+        });
+
+        // Content strategy section
+        gsap.fromTo('.content-strategy h3', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: '.content-strategy', start: 'top 85%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.strategy-tag', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out',
+            scrollTrigger: { trigger: '.strategy-types', start: 'top 90%', toggleActions: 'play none none none' } });
+
+        // Notes section
+        gsap.fromTo('.notes-section', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: '.notes-section', start: 'top 90%', toggleActions: 'play none none none' } });
+
+        // Contact section
+        gsap.fromTo('.contact-section h2', { y: 40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: '.contact-section', start: 'top 85%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.social-btn', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, stagger: 0.1, ease: 'back.out(1.7)',
+            scrollTrigger: { trigger: '.social-links', start: 'top 90%', toggleActions: 'play none none none' } });
+        gsap.fromTo('.contact-info span', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.15, ease: 'power2.out',
+            scrollTrigger: { trigger: '.contact-info', start: 'top 95%', toggleActions: 'play none none none' } });
+
+        // Packages note
+        gsap.fromTo('.packages-note', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: '.packages-note', start: 'top 90%', toggleActions: 'play none none none' } });
+
+        // ===== GSAP Page Load Animation: Zoom to Title =====
+        (function () {
+            const loader = document.getElementById('page-loader');
+            const loaderTitle = loader.querySelector('.loader-title');
+            const heroTitle = document.querySelector('.brand-name');
+
+            // Hide page content initially
+            gsap.set('.ratecard', { opacity: 0 });
+            gsap.set('.side-nav', { opacity: 0 });
+            gsap.set('.bg-gradient', { opacity: 0 });
+
+            const tl = gsap.timeline({
+                onComplete: function () {
+                    loader.style.display = 'none';
+                }
+            });
+
+            // Title appears with scale up
+            tl.fromTo(loaderTitle,
+                { scale: 0.3, opacity: 0, letterSpacing: '0px' },
+                { scale: 1, opacity: 1, letterSpacing: '15px', duration: 1.2, ease: 'power3.out' }
+            )
+            // Hold for a moment
+            .to(loaderTitle, { duration: 0.4 })
+            // Zoom in massively and fade out
+            .to(loaderTitle, {
+                scale: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.in'
+            })
+            // Fade out the loader background
+            .to(loader, {
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power1.out'
+            }, '-=0.5')
+            // Reveal the page content
+            .to('.bg-gradient', { opacity: 1, duration: 0.5, ease: 'power1.out' }, '-=0.3')
+            .to('.ratecard', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.3')
+            .to('.side-nav', { opacity: 1, duration: 0.5, ease: 'power1.out' }, '-=0.5')
+            // Animate the hero title entrance
+            .fromTo(heroTitle,
+                { scale: 1.5, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.5'
+            );
         })();
     </script>
 </body>
