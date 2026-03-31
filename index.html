@@ -56,6 +56,17 @@
         </ul>
     </nav>
 
+    <!-- Vertical Scroll Fill Text -->
+    <div class="scroll-fill-text" id="scrollFillText">
+        <span>K</span>
+        <span>I</span>
+        <span>E</span>
+        <span>U</span>
+        <span>L</span>
+        <span>A</span>
+        <span>N</span>
+    </div>
+
     <div class="bg-gradient">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -1189,6 +1200,29 @@
         // Packages note
         gsap.fromTo('.packages-note', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
             scrollTrigger: { trigger: '.packages-note', start: 'top 90%', toggleActions: 'play none none none' } });
+
+        // ===== Vertical KIEULAN Scroll Fill =====
+        (function () {
+            const letters = document.querySelectorAll('#scrollFillText span');
+            const totalLetters = letters.length;
+
+            ScrollTrigger.create({
+                trigger: document.documentElement,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                onUpdate: function (self) {
+                    const progress = self.progress; // 0 to 1
+                    letters.forEach(function (letter, i) {
+                        var startPct = i / totalLetters;
+                        var endPct = (i + 1) / totalLetters;
+                        var letterProgress = (progress - startPct) / (endPct - startPct);
+                        letterProgress = Math.max(0, Math.min(1, letterProgress));
+                        letter.style.backgroundSize = '100% ' + (letterProgress * 100) + '%';
+                    });
+                }
+            });
+        })();
 
         // ===== GSAP Page Load Animation: Zoom to Title =====
         (function () {

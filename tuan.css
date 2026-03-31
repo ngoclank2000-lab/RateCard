@@ -135,7 +135,41 @@ html {
     opacity: 1;
 }
 
+/* ===== Vertical Scroll Fill Text ===== */
+.scroll-fill-text {
+    position: fixed;
+    left: 15px;
+    top: 0;
+    height: 100vh;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    pointer-events: none;
+}
+
+.scroll-fill-text span {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: calc(100vh / 7 - 4px);
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(212, 80, 107, 0.2);
+    will-change: background-size;
+    background: linear-gradient(to bottom, #d4506b 0%, #c770a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 100% 0%;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 768px) {
+    .scroll-fill-text {
+        display: none;
+    }
     .side-nav-toggle {
         display: flex;
         align-items: center;
